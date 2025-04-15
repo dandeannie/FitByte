@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitByte - Login/Signup</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .container {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            margin: auto;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .left {
+            flex: 1;
+            background: linear-gradient(135deg, #20196b, #19043a);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+        .left img {
+            width: 80%;
+            max-width: 400px;
+            border-radius: 10px;
+        }
+        .right {
+            flex: 1;
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .form-container {
+            width: 100%;
+            max-width: 400px;
+        }
+        .hidden { display: none; }
+        .btn-primary {
+            width: 100%;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 8px;
+            background: #4338CA;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .btn-primary:hover {
+            background: #3730A3;
+        }
+        .switch-form {
+            text-align: center;
+            margin-top: 1rem;
+            color: #777;
+        }
+        .switch-form a {
+            color: #4338CA;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .switch-form a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Left Side (Image) -->
+        <div class="left">
+            <h1>FitByte</h1>
+            <p>Your Fitness Journey Starts Here</p>
+            <img src="{{ url_for('static', filename='img.jpg') }}" alt="Gym Illustration">
+        </div>
+
+        <!-- Right Side (Forms) -->
+        <div class="right">
+            <div class="form-container">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <p class="{{ category }}">{{ message }}</p>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+
+                <div id="loginForm">
+                    <h2>Login</h2>
+                    <form method="POST">
+                        <input type="hidden" name="form_type" value="login">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" name="username" placeholder="Enter Username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" name="password" placeholder="Enter Password" required>
+                        </div>
+                        <button type="submit" class="btn-primary">Login</button>
+                    </form>
+                    <p class="switch-form">Don't have an account? <a href="#" onclick="toggleForms()">Register</a></p>
+                </div>
+
+                <div id="signupForm" class="hidden">
+                    <h2>Sign Up</h2>
+                    <form method="POST">
+                        <input type="hidden" name="form_type" value="signup">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" name="name" placeholder="Enter Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="usernameSignup">Username</label>
+                            <input type="text" name="usernameSignup" placeholder="Enter Username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" name="email" placeholder="Enter Email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="passwordSignup">Password</label>
+                            <input type="password" name="passwordSignup" placeholder="Enter Password" required>
+                        </div>
+                        <button type="submit" class="btn-primary">Sign Up</button>
+                    </form>
+                    <p class="switch-form">Already have an account? <a href="#" onclick="toggleForms()">Login</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleForms() {
+            document.getElementById('loginForm').classList.toggle('hidden');
+            document.getElementById('signupForm').classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>

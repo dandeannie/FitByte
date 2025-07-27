@@ -202,16 +202,6 @@ The application comes with sample data for testing:
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Support
-
-For support and questions, please contact:
-- Email: info@fitbyte.com
-- Phone: (555) 123-4567
-
 ## Future Enhancements
 
 - [ ] Mobile app development

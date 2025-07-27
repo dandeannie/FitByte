@@ -1,29 +1,35 @@
-document.addEventListener("DOMContentLoaded", function () {
-    function calculateBMI(weightId, heightId, resultId, categoryId) {
-        let weight = parseFloat(document.getElementById(weightId).value);
-        let height = parseFloat(document.getElementById(heightId).value) / 100; // Convert cm to meters
+function calculateBMI(weightId, heightId, resultId, categoryId) {
+    let weight = document.getElementById(weightId).value;
+    let height = document.getElementById(heightId).value / 100;
 
-        if (weight > 0 && height > 0) {
-            let bmi = weight / (height * height);
-            document.getElementById(resultId).innerText = bmi.toFixed(2);
-            document.getElementById(categoryId).innerText = getBMICategory(bmi);
-        } else {
-            document.getElementById(resultId).innerText = "-";
-            document.getElementById(categoryId).innerText = "Please enter valid values!";
-        }
+    if (weight > 0 && height > 0) {
+        let bmi = (weight / (height * height)).toFixed(2);
+        document.getElementById(resultId).textContent = bmi;
+        document.getElementById(resultId).classList.add("bmi-result");
+
+        let category = '';
+        if (bmi < 18.5) category = 'Underweight';
+        else if (bmi >= 18.5 && bmi < 24.9) category = 'Normal weight';
+        else if (bmi >= 25 && bmi < 29.9) category = 'Overweight';
+        else category = 'Obese';
+
+        document.getElementById(categoryId).textContent = `Category: ${category}`;
+        document.getElementById(categoryId).classList.add("bmi-category");
+    } else {
+        alert('Please enter valid weight and height values.');
     }
+}
 
-    function getBMICategory(bmi) {
-        if (bmi < 18.5) return "Underweight";
-        if (bmi >= 18.5 && bmi < 24.9) return "Normal weight";
-        if (bmi >= 25 && bmi < 29.9) return "Overweight";
-        return "Obese";
+function toggleModal(show) {
+    const modal = document.getElementById("bmiModal");
+    if (show) {
+        modal.classList.add("show");
+        modal.style.display = "block";
+    } else {
+        modal.classList.remove("show");
+        setTimeout(() => (modal.style.display = "none"), 300);
     }
+}
 
-    function toggleModal(show) {
-        document.getElementById("bmiModal").style.display = show ? "block" : "none";
-    }
-
-    window.calculateBMI = calculateBMI;
-    window.toggleModal = toggleModal;
-});
+document.querySelector(".close-modal").addEventListener("click", () => toggleModal(false));
+document.querySelector(".cancel-btn").addEventListener("click", () => toggleModal(false));

@@ -4,83 +4,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BMI Calculator</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 50px;
-            background-color: #f4f4f4;
-        }
-        .container {
-            max-width: 350px;
-            margin: auto;
-            padding: 20px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-        }
-        h2 {
-            color: #333;
-        }
-        label {
-            font-weight: bold;
-            display: block;
-            margin-top: 10px;
-            color: #555;
-        }
-        input {
-            width: 100%;
-            padding: 10px;
-            margin: 8px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-        button {
-            width: 100%;
-            padding: 12px;
-            background: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            margin-top: 10px;
-        }
-        button:hover {
-            background: #0056b3;
-        }
-        #result {
-            margin-top: 15px;
-            font-size: 18px;
-            font-weight: bold;
-            color: #333;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <h2>BMI Calculator</h2>
-        <label for="height">Height (meters):</label>
-        <input type="number" id="height" step="0.01" placeholder="Enter height in meters">
-        <label for="weight">Weight (kg):</label>
-        <input type="number" id="weight" placeholder="Enter weight in kg">
-        <button onclick="calculateBMI()">Calculate BMI</button>
-        <h3 id="result"></h3>
+
+    <!-- BMI Calculator Section -->
+    <section id="bmi" class="section">
+        <div class="container">
+            <h1>BMI Calculator</h1>
+            <div class="bmi-calculator">
+                <form id="bmiMainForm">
+                    <label for="mainWeight">Weight (kg):</label>
+                    <input type="number" id="mainWeight" required min="1">
+
+                    <label for="mainHeight">Height (cm):</label>
+                    <input type="number" id="mainHeight" required min="1">
+
+                    <button type="button" class="calculate-bmi-btn" onclick="calculateBMI('mainWeight', 'mainHeight', 'bmiResult', 'bmiCategory')">
+                        Calculate BMI
+                    </button>
+                </form>
+                <h3>Your BMI: <span id="bmiResult">-</span></h3>
+                <p id="bmiCategory"></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- BMI Modal -->
+    <div id="bmiModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Calculate Your BMI</h2>
+                <button class="close-modal" onclick="toggleModal(false)">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="bmiModalForm">
+                    <div class="form-group">
+                        <label for="modalWeight">Weight (kg)</label>
+                        <input type="number" id="modalWeight" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="modalHeight">Height (cm)</label>
+                        <input type="number" id="modalHeight" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Your BMI:</label>
+                        <h3 id="modalBmiResult">-</h3>
+                        <p id="modalBmiCategory"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="cancel-btn" onclick="toggleModal(false)">Cancel</button>
+                        <button type="button" class="calculate-bmi-btn" onclick="calculateBMI('modalWeight', 'modalHeight', 'modalBmiResult', 'modalBmiCategory')">
+                            Calculate BMI
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
-    <script>
-        function calculateBMI() {
-            let height = parseFloat(document.getElementById("height").value);
-            let weight = parseFloat(document.getElementById("weight").value);
-            
-            if (height > 0 && weight > 0) {
-                let bmi = weight / (height * height);
-                document.getElementById("result").innerText = "Your BMI: " + bmi.toFixed(2);
-            } else {
-                document.getElementById("result").innerText = "Please enter valid values!";
-            }
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
